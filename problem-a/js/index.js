@@ -132,6 +132,9 @@ renderPaletteTable();
 //Finally, remove the paragraph in the header that explains how to complete the 
 //problem.
 
+let paragraph = document.querySelector('p');
+paragraph.textContent = "";
+
 
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
