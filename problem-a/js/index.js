@@ -62,6 +62,7 @@ element.
   argument element. This method returns an Object containing the element's
   width and height. Return the `width` value of that object.
 */
+
 function getElementWidth(domElement) {
 
   let getWidth = domElement.getBoundingClientRect();
@@ -91,18 +92,17 @@ browser window unless you refresh.
 
 You should NOT include any test calls when running Jest tests!
 */
-function renderPaletteRow(colorStringsArray, parentDom) {
-  let ColorBoxArray = document.createElement('div');
-  let TotalWidth = getElementWidth(parentDom);
-  let dividedWidth = TotalWidth / colorStringsArray.size;
+function renderPaletteRow(colorStr, parentDOM) {
+  let width = getElementWidth(parentDOM);
+  let newDiv = document.createElement('div');
 
-  for (let i = 0; i < colorStringsArray.size; i++) {
-
-    let ColorBox = createColorBox(colorStringsArray[i], dividedWidth);
-    ColorBoxArray.appendChild(ColorBox);
+  for (var x = 0; x < colorStr.length; x++) {
+    newDiv.appendChild(createColorBox(colorStr[x], (width / colorStr.length)));
 
   }
-  return parentDom.appendChild(ColorBoxArray);
+
+  parentDOM.appendChild(newDiv);
+
 }
 
 
@@ -116,16 +116,17 @@ Tip: note that `COLORS_9` is an object, not an array! You'll need to use a
 
 Call your `renderPaletteTable()` method to display all the color palettes!
 */
-function renderPaletteTable() {
-  let actualTable = document.createElement('main');
-  for (var x in COLORS_9) {
-    let newRow = renderPaletteRow(COLORS_9[x], document.createElement('div'));
-    actualTable.appendChild(newRow);
+
+
+function renderPaletteTable(){
+  let main = document.querySelector('main');
+  let colors = Object.keys(COLORS_9);
+
+  for (let x = 0; x < colors.length; x++) {
+    renderPaletteRow(COLORS_9[colors[x]], main);
   }
-  return actualTable;
 }
 
-renderPaletteRow();
 renderPaletteTable();
 
 //Finally, remove the paragraph in the header that explains how to complete the 
