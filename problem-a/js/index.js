@@ -3,27 +3,29 @@
 //Below is an object containing different color palettes that you will show
 //Palettes from ColorBrewer (http://colorbrewer2.org/)
 const COLORS_9 = {
-  Spectral: ['#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd'],
-  Reds: ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d','#a50f15','#67000d'],
-  Blues: ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b'],
-  Greens: ['#f7fcf5','#e5f5e0','#c7e9c0','#a1d99b','#74c476','#41ab5d','#238b45','#006d2c','#00441b'],
-  Purples: ['#fcfbfd','#efedf5','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#54278f','#3f007d'],
+  Spectral: ['#d53e4f', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#e6f598', '#abdda4', '#66c2a5', '#3288bd'],
+  Reds: ['#fff5f0', '#fee0d2', '#fcbba1', '#fc9272', '#fb6a4a', '#ef3b2c', '#cb181d', '#a50f15', '#67000d'],
+  Blues: ['#f7fbff', '#deebf7', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#08519c', '#08306b'],
+  Greens: ['#f7fcf5', '#e5f5e0', '#c7e9c0', '#a1d99b', '#74c476', '#41ab5d', '#238b45', '#006d2c', '#00441b'],
+  Purples: ['#fcfbfd', '#efedf5', '#dadaeb', '#bcbddc', '#9e9ac8', '#807dba', '#6a51a3', '#54278f', '#3f007d'],
 };
 
 /* Your code goes here! */
 
 //Create a variable `h1` that refers to the `<h1>` element in the DOM.
-
+let h1 = document.querySelector('h1');
 
 //Change the `textContent` of the `<h1>` element to be "Which Swatch?"
-
+h1.textContent = 'Which Swatch?';
 
 //Somehow the rainbow icon image was included without an alt tag! Set its `alt`
 //attribute to be "A beautiful rainbow".
-
+let img = document.querySelector('img');
+img.alt = 'A beautiful rainbow';
 
 //Give the image the Bootstrap-provided `float-right` CSS class to make it float
 //to the right of the screen
+img.classList.add('float-right');
 
 
 /*Define a function `createColorBox()` that takes in two parameters: a color 
@@ -38,16 +40,35 @@ shoukld do the following:
 You can test this function by logging out the returned value and checking its
 attributes.
 */
+function createColorBox(color, size) {
+
+  let newDiv = document.createElement('div');
+  newDiv.classList.add('d-inline-block');
+  newDiv.style.backgroundColor = color;
+
+  newDiv.style.height = (size + 'px');
+  newDiv.style.width = (size + 'px');
+
+
+  return newDiv;
+}
 
 
 
 /* Define a function `getElementWidth()` that takes in a DOM element (not a 
 string!). This function should return the width in pixels (a number) of that
 element.
- - Determine this width by calling the `getBoundingClientRect()` method on the
-   argument element. This method returns an Object containing the element's
-   width and height. Return the `width` value of that object.
+- Determine this width by calling the `getBoundingClientRect()` method on the
+  argument element. This method returns an Object containing the element's
+  width and height. Return the `width` value of that object.
 */
+
+function getElementWidth(domElement) {
+
+  let getWidth = domElement.getBoundingClientRect();
+
+  return getWidth.width;
+}
 
 
 
@@ -71,7 +92,18 @@ browser window unless you refresh.
 
 You should NOT include any test calls when running Jest tests!
 */
+function renderPaletteRow(colorStr, parentDOM) {
+  let width = getElementWidth(parentDOM);
+  let newDiv = document.createElement('div');
 
+  for (var x = 0; x < colorStr.length; x++) {
+    newDiv.appendChild(createColorBox(colorStr[x], (width / colorStr.length)));
+
+  }
+
+  parentDOM.appendChild(newDiv);
+
+}
 
 
 /* Define a function `renderPaletteTable()` that takes no arguments and renders 
@@ -86,17 +118,30 @@ Call your `renderPaletteTable()` method to display all the color palettes!
 */
 
 
+function renderPaletteTable(){
+  let main = document.querySelector('main');
+  let colors = Object.keys(COLORS_9);
+
+  for (let x = 0; x < colors.length; x++) {
+    renderPaletteRow(COLORS_9[colors[x]], main);
+  }
+}
+
+renderPaletteTable();
 
 //Finally, remove the paragraph in the header that explains how to complete the 
 //problem.
 
+let paragraph = document.querySelector('p');
+paragraph.textContent = "";
+
 
 
 //Make functions and variables available to tester. DO NOT MODIFY THIS.
-if(typeof module !== 'undefined' && module.exports){
+if (typeof module !== 'undefined' && module.exports) {
   /* eslint-disable */
-  if(typeof createColorBox !== 'undefined') 
+  if (typeof createColorBox !== 'undefined')
     module.exports.createColorBox = createColorBox;
-  if(typeof renderPaletteRow !== 'undefined') 
+  if (typeof renderPaletteRow !== 'undefined')
     module.exports.renderPalette = renderPaletteRow;
 }

@@ -23,6 +23,17 @@ let state = {
 //pass it an object representing a single task; you can pass it one of the
 //examples from the state (e.g., `state.taskList[0]`).
 
+function createTaskItemElement(state){
+
+  let newTask = state.taskList[0];
+  let toDoTask = document.createElement('li');
+
+  newTask.style.textDecoration = 'line-trough';
+  toDoTask.add(newTask);
+
+return toDoTask;
+}
+
 
 
 //Define a function `renderTaskList()` that will fill in the provided <ol> with 
